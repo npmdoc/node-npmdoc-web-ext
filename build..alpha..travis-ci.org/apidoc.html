@@ -1,0 +1,380 @@
+<div class="apidocDiv">
+<style>
+/*csslint
+*/
+.apidocDiv {
+    background: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.apidocDiv a[href] {
+    color: #33f;
+    font-weight: bold;
+    text-decoration: none;
+}
+.apidocDiv a[href]:hover {
+    text-decoration: underline;
+}
+.apidocCodeCommentSpan {
+    background: #bbf;
+    color: #000;
+    display: block;
+}
+.apidocCodeKeywordSpan {
+    color: #d00;
+    font-weight: bold;
+}
+.apidocCodePre {
+    background: #eef;
+    border: 1px solid;
+    color: #777;
+    padding: 5px;
+    white-space: pre-wrap;
+}
+.apidocFooterDiv {
+    margin-top: 20px;
+    text-align: center;
+}
+.apidocModuleLi {
+    margin-top: 10px;
+}
+.apidocSectionDiv {
+    border-top: 1px solid;
+    margin-top: 20px;
+}
+.apidocSignatureSpan {
+    color: #777;
+    font-weight: bold;
+}
+</style>
+<h1>api documentation for
+    <a
+
+        href="https://github.com/mozilla/web-ext"
+
+    >web-ext (v1.8.1)</a>
+</h1>
+<h4>A command line tool to help build, run, and test web extensions</h4>
+<div class="apidocSectionDiv"><a
+    href="#apidoc.tableOfContents"
+    id="apidoc.tableOfContents"
+><h1>table of contents</h1></a><ol>
+
+    <li class="apidocModuleLi"><a href="#apidoc.module.web-ext">module web-ext</a><ol>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.web-ext.Gruntfile">
+            function <span class="apidocSignatureSpan">web-ext.</span>Gruntfile
+            <span class="apidocSignatureSpan">(grunt)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.web-ext.main">
+            function <span class="apidocSignatureSpan">web-ext.</span>main
+            <span class="apidocSignatureSpan">(absolutePackageDir)</span>
+            </a>
+
+        </li>
+
+    </ol></li>
+
+    <li class="apidocModuleLi"><a href="#apidoc.module.web-ext.Gruntfile">module web-ext.Gruntfile</a><ol>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.web-ext.Gruntfile.Gruntfile">
+            function <span class="apidocSignatureSpan">web-ext.</span>Gruntfile
+            <span class="apidocSignatureSpan">(grunt)</span>
+            </a>
+
+        </li>
+
+    </ol></li>
+
+    <li class="apidocModuleLi"><a href="#apidoc.module.web-ext.main">module web-ext.main</a><ol>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.web-ext.main.main">
+            function <span class="apidocSignatureSpan">web-ext.</span>main
+            <span class="apidocSignatureSpan">(absolutePackageDir)</span>
+            </a>
+
+        </li>
+
+    </ol></li>
+
+</ol></div>
+
+<div class="apidocSectionDiv">
+<h1><a href="#apidoc.module.web-ext" id="apidoc.module.web-ext">module web-ext</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.web-ext.Gruntfile" id="apidoc.element.web-ext.Gruntfile">
+        function <span class="apidocSignatureSpan">web-ext.</span>Gruntfile
+        <span class="apidocSignatureSpan">(grunt)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">Gruntfile = function (grunt) {
+
+  // Looking for something?
+  // The source of a grunt task or its configuration might be in:
+  // 1. this file :)
+  // 2. ./node_modules/grunt-*&#x3c;task_name&#x3e;/
+  // 3. ./tasks/&#x3c;task_name&#x3e;.js
+  // 4. ./tasks/config/&#x3c;task_name&#x3e;.js
+
+
+  // This loads all grunt tasks matching the grunt-*, @*/grunt-* patterns.
+  require(&#x27;load-grunt-tasks&#x27;)(grunt);
+
+  var configs = require(&#x27;load-grunt-configs&#x27;)(grunt, {
+    config: {
+      src: &#x27;tasks/configs/*.js&#x27;,
+    },
+  });
+  grunt.initConfig(configs);
+
+  grunt.registerTask(&#x27;build&#x27;, [
+    &#x27;clean&#x27;,
+    &#x27;webpack:build&#x27;,
+  ]);
+
+  grunt.registerTask(&#x27;build-tests&#x27;, [
+    &#x27;build&#x27;,
+    &#x27;webpack:unit_tests&#x27;,
+    &#x27;webpack:functional_tests&#x27;,
+  ]);
+
+  grunt.registerTask(&#x27;test&#x27;, &#x27;run linting and test suites&#x27;, function() {
+    var tasks = [
+      &#x27;lint&#x27;,
+      &#x27;flowbin:check&#x27;,
+      &#x27;build-tests&#x27;,
+      &#x27;mochaTest:unit&#x27;,
+      &#x27;mochaTest:functional&#x27;,
+    ];
+
+    // TODO: enable the flowbin:check task on AppVeyor (mozilla/web-ext#773)
+    if (process.env.APPVEYOR) {
+      tasks = tasks.filter((t) =&#x3e; t !== &#x27;flowbin:check&#x27;);
+      grunt.log.writeln(&#x27;flowbin:check task skipped because of $APPVEYOR&#x27;);
+    }
+
+    grunt.task.run(tasks);
+  });
+
+  grunt.registerTask(&#x27;develop&#x27;, [
+    &#x27;flowbin:start&#x27;,
+    &#x27;watch:develop&#x27;,
+  ]);
+
+  grunt.registerTask(&#x27;lint&#x27;, &#x27;checks for syntax errors&#x27;, function() {
+    if (process.env.SKIP_LINT) {
+      grunt.log.writeln(&#x27;lint task skipped because of $SKIP_LINT&#x27;);
+    } else {
+      grunt.task.run([
+        &#x27;eslint&#x27;,
+      ]);
+    }
+  });
+
+  require(&#x27;./tasks/travis-pr-title-lint&#x27;)(grunt);
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.web-ext.main" id="apidoc.element.web-ext.main">
+        function <span class="apidocSignatureSpan">web-ext.</span>main
+        <span class="apidocSignatureSpan">(absolutePackageDir)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">function main(absolutePackageDir) {
+	   __cov_rtDiy5PKXWj8mZTjz2K$4w.f[&#x27;13&#x27;]++;__cov_rtDiy5PKXWj8mZTjz2K$4w.s[&#x27;123&#x27;]++;var _ref5 = (__cov_rtDiy5PKXWj8mZTjz2K$4w.b[&#x27;
+36&#x27;][0]++, arguments.length &#x3e; 1) &#x26;&#x26; (__cov_rtDiy5PKXWj8mZTjz2K$4w.b[&#x27;36&#x27;][1]++, arguments[1] !== undefined) ? (__cov_rtDiy5PKXWj8mZTjz2K
+$4w.b[&#x27;35&#x27;][0]++, arguments[1]) : (__cov_rtDiy5PKXWj8mZTjz2K$4w.b[&#x27;35&#x27;][1]++, {}),
+	       _ref5$getVersion = _ref5.getVersion,
+	       getVersion = _ref5$getVersion === undefined ? (__cov_rtDiy5PKXWj8mZTjz2K$4w.b[&#x27;37&#x27;][0]++, defaultVersionGetter) : (__cov_rtDiy5PKXWj8mZTjz2K
+$4w.b[&#x27;37&#x27;][1]++, _ref5$getVersion),
+	       _ref5$commands = _ref5.commands,
+	       commands = _ref5$commands === undefined ? (__cov_rtDiy5PKXWj8mZTjz2K$4w.b[&#x27;38&#x27;][0]++, _cmd2.default) : (__cov_rtDiy5PKXWj8mZTjz2K
+$4w.b[&#x27;38&#x27;][1]++, _ref5$commands),
+	       argv = _ref5.argv,
+	       _ref5$runOptions = _ref5.runOptions,
+	       runOptions = _ref5$runOptions === undefined ? (__cov_rtDiy5PKXWj8mZTjz2K$4w.b[&#x27;39&#x27;][0]++, {}) : (__cov_rtDiy5PKXWj8mZTjz2K
+$4w.b[&#x27;39&#x27;][1]++, _ref5$runOptions);__cov_rtDiy5PKXWj8mZTjz2K$4w.s[&#x27;124&#x27;]++;var program = new Program(argv, { absolutePackageDir
+: absolutePackageDir });__cov_rtDiy5PKXWj8mZTjz2K$4w.s[&#x27;125&#x27;]++;program.yargs.usage(&#x27;Usage: $0 [options] command\n\nOption values can also be set by declaring an environment variable prefixed\nwith $&#x27; + envPrefix + &#x27;_. For example: $&#x27; + envPrefix + &#x27;_SOURCE_DIR=/path is the same as\n--source-dir=/path.\n\nTo view specific help for any given command, add the command name.\nExample: $0 --help run.\n&#x27;).help(&#x27;help&#x27;).alias(&#x27;h&#x27;, &#x27;help&#x27;).env(envPrefix).version(function () {
+	      __cov_rtDiy5PKXWj8mZTjz2K$4w.f[&#x27;14&#x27;]++;__cov_rtDiy5PKXWj8mZTjz2K$4w.s[&#x27;126&#x27;]++;return getVersion(absolutePackageDir);
+	   }).demandCommand(1, &#x27;You must specify a command&#x27;).strict();__cov_rtDiy5PKXWj8mZTjz2K$4w.s[&#x27;127&#x27;]++;program.setGlobalOptions({ &#x27;
+source-dir&#x27;: { alias: &#x27;s&#x27;, describe: &#x27;Web extension source directory.&#x27;, default: process.cwd(), requiresArg: true, type: &#x27;string
+&#x27;, coerce: _path2.default.resolve }, &#x27;artifacts-dir&#x27;: { alias: &#x27;a&#x27;, describe: &#x27;Directory where artifacts will be saved.&#x27;, default
+: _path2.default.join(process.cwd(), &#x27;web-ext-artifacts&#x27;), normalize: true, requiresArg: true, type: &#x27;string&#x27; }, &#x27;verbose&#x27;: { alias
+: &#x27;v&#x27;, describe: &#x27;Show verbose output&#x27;, type: &#x27;boolean&#x27; }, &#x27;ignore-files&#x27;: { alias: &#x27;i&#x27;, describe: &#x27;A list of glob patterns to define
+ which files should be &#x27; + &#x27;ignored. (Example: --ignore-files=path/to/first.js &#x27; + &#x27;path/to/second.js &#x22;**/*.log&#x22;)&#x27;, demand: false
+, requiresArg: true, type: &#x27;array&#x27; } });__cov_rtDiy5PKXWj8mZTjz2K$4w.s[&#x27;128&#x27;]++;program.command(&#x27;build&#x27;, &#x27;Create a web extension
+ package from source&#x27;, commands.build, { &#x27;as-needed&#x27;: { describe: &#x27;Watch for file changes and re-build as needed&#x27;, type: &#x27;boolean
+&#x27; } }).command(&#x27;sign&#x27;, &#x27;Sign the web extension so it can be installed in Firefox&#x27;, commands.sign, { &#x27;api-key&#x27;: { describe: &#x27;API
+key (JWT issuer) from addons.mozilla.org&#x27;, demand: true, type: &#x27;string&#x27; }, &#x27;api-secret&#x27;: { describe: &#x27;API secret (JWT secret) from
+ addons.mozilla.org&#x27;, demand: true, type: &#x27;string&#x27; }, &#x27;api-url-prefix&#x27;: { describe: &#x27;Signing API URL prefix&#x27;, default: &#x27;https://
+addons.mozilla.org/api/v3&#x27;, demand: true, type: &#x27;string&#x27; }, &#x27;api-proxy&#x27;: { describe: &#x27;Use a proxy to access the signing API. &#x27; + &#x27;
+Example: https://yourproxy:6000 &#x27;, demand: false, type: &#x27;string&#x27; }, &#x27;id&#x27;: { describe: &#x27;A custom ID for the extension. This has no
+ effect if the &#x27; + &#x27;extension already declares an explicit ID in its manifest.&#x27;, demand: false, type: &#x27;string&#x27; }, &#x27;timeout&#x27;: { describe
+: &#x27;Number of milliseconds to wait before giving up&#x27;, type: &#x27;number&#x27; } }).command(&#x27;run&#x27;, &#x27;Run the web extension&#x27;, commands.run, { &#x27;
+firefox&#x27;: { alias: [&#x27;f&#x27;, &#x27;firefox-binary&#x27;], describe: &#x27;Path or alias to a Firefox executable such as firefox-bin &#x27; + &#x27;or firefox
+.exe. &#x27; + &#x27;If not specified, the default Firefox will be used. &#x27; + &#x27;You can specify the following aliases in lieu of a path: &#x27; + &#x27;
+firefox, beta, nightly, firefoxdeveloperedition.&#x27;, demand: false, type: &#x27;string&#x27; }, &#x27;firefox-profile&#x27;: { alias: &#x27;p ...</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+</div>
+
+<div class="apidocSectionDiv">
+<h1><a href="#apidoc.module.web-ext.Gruntfile" id="apidoc.module.web-ext.Gruntfile">module web-ext.Gruntfile</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.web-ext.Gruntfile.Gruntfile" id="apidoc.element.web-ext.Gruntfile.Gruntfile">
+        function <span class="apidocSignatureSpan">web-ext.</span>Gruntfile
+        <span class="apidocSignatureSpan">(grunt)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">Gruntfile = function (grunt) {
+
+  // Looking for something?
+  // The source of a grunt task or its configuration might be in:
+  // 1. this file :)
+  // 2. ./node_modules/grunt-*&#x3c;task_name&#x3e;/
+  // 3. ./tasks/&#x3c;task_name&#x3e;.js
+  // 4. ./tasks/config/&#x3c;task_name&#x3e;.js
+
+
+  // This loads all grunt tasks matching the grunt-*, @*/grunt-* patterns.
+  require(&#x27;load-grunt-tasks&#x27;)(grunt);
+
+  var configs = require(&#x27;load-grunt-configs&#x27;)(grunt, {
+    config: {
+      src: &#x27;tasks/configs/*.js&#x27;,
+    },
+  });
+  grunt.initConfig(configs);
+
+  grunt.registerTask(&#x27;build&#x27;, [
+    &#x27;clean&#x27;,
+    &#x27;webpack:build&#x27;,
+  ]);
+
+  grunt.registerTask(&#x27;build-tests&#x27;, [
+    &#x27;build&#x27;,
+    &#x27;webpack:unit_tests&#x27;,
+    &#x27;webpack:functional_tests&#x27;,
+  ]);
+
+  grunt.registerTask(&#x27;test&#x27;, &#x27;run linting and test suites&#x27;, function() {
+    var tasks = [
+      &#x27;lint&#x27;,
+      &#x27;flowbin:check&#x27;,
+      &#x27;build-tests&#x27;,
+      &#x27;mochaTest:unit&#x27;,
+      &#x27;mochaTest:functional&#x27;,
+    ];
+
+    // TODO: enable the flowbin:check task on AppVeyor (mozilla/web-ext#773)
+    if (process.env.APPVEYOR) {
+      tasks = tasks.filter((t) =&#x3e; t !== &#x27;flowbin:check&#x27;);
+      grunt.log.writeln(&#x27;flowbin:check task skipped because of $APPVEYOR&#x27;);
+    }
+
+    grunt.task.run(tasks);
+  });
+
+  grunt.registerTask(&#x27;develop&#x27;, [
+    &#x27;flowbin:start&#x27;,
+    &#x27;watch:develop&#x27;,
+  ]);
+
+  grunt.registerTask(&#x27;lint&#x27;, &#x27;checks for syntax errors&#x27;, function() {
+    if (process.env.SKIP_LINT) {
+      grunt.log.writeln(&#x27;lint task skipped because of $SKIP_LINT&#x27;);
+    } else {
+      grunt.task.run([
+        &#x27;eslint&#x27;,
+      ]);
+    }
+  });
+
+  require(&#x27;./tasks/travis-pr-title-lint&#x27;)(grunt);
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+</div>
+
+<div class="apidocSectionDiv">
+<h1><a href="#apidoc.module.web-ext.main" id="apidoc.module.web-ext.main">module web-ext.main</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.web-ext.main.main" id="apidoc.element.web-ext.main.main">
+        function <span class="apidocSignatureSpan">web-ext.</span>main
+        <span class="apidocSignatureSpan">(absolutePackageDir)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">function main(absolutePackageDir) {
+	   __cov_rtDiy5PKXWj8mZTjz2K$4w.f[&#x27;13&#x27;]++;__cov_rtDiy5PKXWj8mZTjz2K$4w.s[&#x27;123&#x27;]++;var _ref5 = (__cov_rtDiy5PKXWj8mZTjz2K$4w.b[&#x27;
+36&#x27;][0]++, arguments.length &#x3e; 1) &#x26;&#x26; (__cov_rtDiy5PKXWj8mZTjz2K$4w.b[&#x27;36&#x27;][1]++, arguments[1] !== undefined) ? (__cov_rtDiy5PKXWj8mZTjz2K
+$4w.b[&#x27;35&#x27;][0]++, arguments[1]) : (__cov_rtDiy5PKXWj8mZTjz2K$4w.b[&#x27;35&#x27;][1]++, {}),
+	       _ref5$getVersion = _ref5.getVersion,
+	       getVersion = _ref5$getVersion === undefined ? (__cov_rtDiy5PKXWj8mZTjz2K$4w.b[&#x27;37&#x27;][0]++, defaultVersionGetter) : (__cov_rtDiy5PKXWj8mZTjz2K
+$4w.b[&#x27;37&#x27;][1]++, _ref5$getVersion),
+	       _ref5$commands = _ref5.commands,
+	       commands = _ref5$commands === undefined ? (__cov_rtDiy5PKXWj8mZTjz2K$4w.b[&#x27;38&#x27;][0]++, _cmd2.default) : (__cov_rtDiy5PKXWj8mZTjz2K
+$4w.b[&#x27;38&#x27;][1]++, _ref5$commands),
+	       argv = _ref5.argv,
+	       _ref5$runOptions = _ref5.runOptions,
+	       runOptions = _ref5$runOptions === undefined ? (__cov_rtDiy5PKXWj8mZTjz2K$4w.b[&#x27;39&#x27;][0]++, {}) : (__cov_rtDiy5PKXWj8mZTjz2K
+$4w.b[&#x27;39&#x27;][1]++, _ref5$runOptions);__cov_rtDiy5PKXWj8mZTjz2K$4w.s[&#x27;124&#x27;]++;var program = new Program(argv, { absolutePackageDir
+: absolutePackageDir });__cov_rtDiy5PKXWj8mZTjz2K$4w.s[&#x27;125&#x27;]++;program.yargs.usage(&#x27;Usage: $0 [options] command\n\nOption values can also be set by declaring an environment variable prefixed\nwith $&#x27; + envPrefix + &#x27;_. For example: $&#x27; + envPrefix + &#x27;_SOURCE_DIR=/path is the same as\n--source-dir=/path.\n\nTo view specific help for any given command, add the command name.\nExample: $0 --help run.\n&#x27;).help(&#x27;help&#x27;).alias(&#x27;h&#x27;, &#x27;help&#x27;).env(envPrefix).version(function () {
+	      __cov_rtDiy5PKXWj8mZTjz2K$4w.f[&#x27;14&#x27;]++;__cov_rtDiy5PKXWj8mZTjz2K$4w.s[&#x27;126&#x27;]++;return getVersion(absolutePackageDir);
+	   }).demandCommand(1, &#x27;You must specify a command&#x27;).strict();__cov_rtDiy5PKXWj8mZTjz2K$4w.s[&#x27;127&#x27;]++;program.setGlobalOptions({ &#x27;
+source-dir&#x27;: { alias: &#x27;s&#x27;, describe: &#x27;Web extension source directory.&#x27;, default: process.cwd(), requiresArg: true, type: &#x27;string
+&#x27;, coerce: _path2.default.resolve }, &#x27;artifacts-dir&#x27;: { alias: &#x27;a&#x27;, describe: &#x27;Directory where artifacts will be saved.&#x27;, default
+: _path2.default.join(process.cwd(), &#x27;web-ext-artifacts&#x27;), normalize: true, requiresArg: true, type: &#x27;string&#x27; }, &#x27;verbose&#x27;: { alias
+: &#x27;v&#x27;, describe: &#x27;Show verbose output&#x27;, type: &#x27;boolean&#x27; }, &#x27;ignore-files&#x27;: { alias: &#x27;i&#x27;, describe: &#x27;A list of glob patterns to define
+ which files should be &#x27; + &#x27;ignored. (Example: --ignore-files=path/to/first.js &#x27; + &#x27;path/to/second.js &#x22;**/*.log&#x22;)&#x27;, demand: false
+, requiresArg: true, type: &#x27;array&#x27; } });__cov_rtDiy5PKXWj8mZTjz2K$4w.s[&#x27;128&#x27;]++;program.command(&#x27;build&#x27;, &#x27;Create a web extension
+ package from source&#x27;, commands.build, { &#x27;as-needed&#x27;: { describe: &#x27;Watch for file changes and re-build as needed&#x27;, type: &#x27;boolean
+&#x27; } }).command(&#x27;sign&#x27;, &#x27;Sign the web extension so it can be installed in Firefox&#x27;, commands.sign, { &#x27;api-key&#x27;: { describe: &#x27;API
+key (JWT issuer) from addons.mozilla.org&#x27;, demand: true, type: &#x27;string&#x27; }, &#x27;api-secret&#x27;: { describe: &#x27;API secret (JWT secret) from
+ addons.mozilla.org&#x27;, demand: true, type: &#x27;string&#x27; }, &#x27;api-url-prefix&#x27;: { describe: &#x27;Signing API URL prefix&#x27;, default: &#x27;https://
+addons.mozilla.org/api/v3&#x27;, demand: true, type: &#x27;string&#x27; }, &#x27;api-proxy&#x27;: { describe: &#x27;Use a proxy to access the signing API. &#x27; + &#x27;
+Example: https://yourproxy:6000 &#x27;, demand: false, type: &#x27;string&#x27; }, &#x27;id&#x27;: { describe: &#x27;A custom ID for the extension. This has no
+ effect if the &#x27; + &#x27;extension already declares an explicit ID in its manifest.&#x27;, demand: false, type: &#x27;string&#x27; }, &#x27;timeout&#x27;: { describe
+: &#x27;Number of milliseconds to wait before giving up&#x27;, type: &#x27;number&#x27; } }).command(&#x27;run&#x27;, &#x27;Run the web extension&#x27;, commands.run, { &#x27;
+firefox&#x27;: { alias: [&#x27;f&#x27;, &#x27;firefox-binary&#x27;], describe: &#x27;Path or alias to a Firefox executable such as firefox-bin &#x27; + &#x27;or firefox
+.exe. &#x27; + &#x27;If not specified, the default Firefox will be used. &#x27; + &#x27;You can specify the following aliases in lieu of a path: &#x27; + &#x27;
+firefox, beta, nightly, firefoxdeveloperedition.&#x27;, demand: false, type: &#x27;string&#x27; }, &#x27;firefox-profile&#x27;: { alias: &#x27;p ...</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+</div>
+
+<div class="apidocFooterDiv">
+    [ this document was created with
+    <a href="https://github.com/kaizhu256/node-utility2" target="_blank">utility2</a>
+    ]
+</div>
+</div>
