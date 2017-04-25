@@ -47,7 +47,7 @@
 }
 </style>
 <h1>api documentation for
-    <a href="https://github.com/mozilla/web-ext">web-ext (v1.8.1)</a>
+    <a href="https://github.com/mozilla/web-ext">web-ext (v1.9.0)</a>
 </h1>
 <h4>A command line tool to help build, run, and test web extensions</h4>
 <div class="apidocSectionDiv"><a href="#apidoc.tableOfContents" id="apidoc.tableOfContents"><h1>table of contents</h1></a><ol>
@@ -56,42 +56,7 @@
 
         <li>
 
-            <a class="apidocElementLiA" href="#apidoc.element.web-ext.Gruntfile">
-            function <span class="apidocSignatureSpan">web-ext.</span>Gruntfile
-            <span class="apidocSignatureSpan">(grunt)</span>
-            </a>
-
-        </li>
-
-        <li>
-
             <a class="apidocElementLiA" href="#apidoc.element.web-ext.main">
-            function <span class="apidocSignatureSpan">web-ext.</span>main
-            <span class="apidocSignatureSpan">(absolutePackageDir)</span>
-            </a>
-
-        </li>
-
-    </ol></li>
-
-    <li class="apidocModuleLi"><a href="#apidoc.module.web-ext.Gruntfile">module web-ext.Gruntfile</a><ol>
-
-        <li>
-
-            <a class="apidocElementLiA" href="#apidoc.element.web-ext.Gruntfile.Gruntfile">
-            function <span class="apidocSignatureSpan">web-ext.</span>Gruntfile
-            <span class="apidocSignatureSpan">(grunt)</span>
-            </a>
-
-        </li>
-
-    </ol></li>
-
-    <li class="apidocModuleLi"><a href="#apidoc.module.web-ext.main">module web-ext.main</a><ol>
-
-        <li>
-
-            <a class="apidocElementLiA" href="#apidoc.element.web-ext.main.main">
             function <span class="apidocSignatureSpan">web-ext.</span>main
             <span class="apidocSignatureSpan">(absolutePackageDir)</span>
             </a>
@@ -107,84 +72,6 @@
 
 
     <h2>
-        <a href="#apidoc.element.web-ext.Gruntfile" id="apidoc.element.web-ext.Gruntfile">
-        function <span class="apidocSignatureSpan">web-ext.</span>Gruntfile
-        <span class="apidocSignatureSpan">(grunt)</span>
-        </a>
-    </h2>
-    <ul>
-    <li>description and source-code<pre class="apidocCodePre">Gruntfile = function (grunt) {
-
-  // Looking for something?
-  // The source of a grunt task or its configuration might be in:
-  // 1. this file :)
-  // 2. ./node_modules/grunt-*&lt;task_name&gt;/
-  // 3. ./tasks/&lt;task_name&gt;.js
-  // 4. ./tasks/config/&lt;task_name&gt;.js
-
-
-  // This loads all grunt tasks matching the grunt-*, @*/grunt-* patterns.
-  require('load-grunt-tasks')(grunt);
-
-  var configs = require('load-grunt-configs')(grunt, {
-    config: {
-      src: 'tasks/configs/*.js',
-    },
-  });
-  grunt.initConfig(configs);
-
-  grunt.registerTask('build', [
-    'clean',
-    'webpack:build',
-  ]);
-
-  grunt.registerTask('build-tests', [
-    'build',
-    'webpack:unit_tests',
-    'webpack:functional_tests',
-  ]);
-
-  grunt.registerTask('test', 'run linting and test suites', function() {
-    var tasks = [
-      'lint',
-      'flowbin:check',
-      'build-tests',
-      'mochaTest:unit',
-      'mochaTest:functional',
-    ];
-
-    // TODO: enable the flowbin:check task on AppVeyor (mozilla/web-ext#773)
-    if (process.env.APPVEYOR) {
-      tasks = tasks.filter((t) =&gt; t !== 'flowbin:check');
-      grunt.log.writeln('flowbin:check task skipped because of $APPVEYOR');
-    }
-
-    grunt.task.run(tasks);
-  });
-
-  grunt.registerTask('develop', [
-    'flowbin:start',
-    'watch:develop',
-  ]);
-
-  grunt.registerTask('lint', 'checks for syntax errors', function() {
-    if (process.env.SKIP_LINT) {
-      grunt.log.writeln('lint task skipped because of $SKIP_LINT');
-    } else {
-      grunt.task.run([
-        'eslint',
-      ]);
-    }
-  });
-
-  require('./tasks/travis-pr-title-lint')(grunt);
-}</pre></li>
-    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
-    </ul>
-
-
-
-    <h2>
         <a href="#apidoc.element.web-ext.main" id="apidoc.element.web-ext.main">
         function <span class="apidocSignatureSpan">web-ext.</span>main
         <span class="apidocSignatureSpan">(absolutePackageDir)</span>
@@ -192,7 +79,7 @@
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">function main(absolutePackageDir) {
-	   __cov_rtDiy5PKXWj8mZTjz2K$4w.f['13']++;__cov_rtDiy5PKXWj8mZTjz2K$4w.s['123']++;var _ref5 = (__cov_rtDiy5PKXWj8mZTjz2K$4w.b['
+	   __cov_rtDiy5PKXWj8mZTjz2K$4w.f['15']++;__cov_rtDiy5PKXWj8mZTjz2K$4w.s['130']++;var _ref5 = (__cov_rtDiy5PKXWj8mZTjz2K$4w.b['
 36'][0]++, arguments.length &gt; 1) &amp;&amp; (__cov_rtDiy5PKXWj8mZTjz2K$4w.b['36'][1]++, arguments[1] !== undefined) ? (__cov_rtDiy5PKXWj8mZTjz2K
 $4w.b['35'][0]++, arguments[1]) : (__cov_rtDiy5PKXWj8mZTjz2K$4w.b['35'][1]++, {}),
 	       _ref5$getVersion = _ref5.getVersion,
@@ -204,16 +91,16 @@ $4w.b['38'][1]++, _ref5$commands),
 	       argv = _ref5.argv,
 	       _ref5$runOptions = _ref5.runOptions,
 	       runOptions = _ref5$runOptions === undefined ? (__cov_rtDiy5PKXWj8mZTjz2K$4w.b['39'][0]++, {}) : (__cov_rtDiy5PKXWj8mZTjz2K
-$4w.b['39'][1]++, _ref5$runOptions);__cov_rtDiy5PKXWj8mZTjz2K$4w.s['124']++;var program = new Program(argv, { absolutePackageDir
-: absolutePackageDir });__cov_rtDiy5PKXWj8mZTjz2K$4w.s['125']++;program.yargs.usage('Usage: $0 [options] command\n\nOption values can also be set by declaring an environment variable prefixed\nwith $' + envPrefix + '_. For example: $' + envPrefix + '_SOURCE_DIR=/path is the same as\n--source-dir=/path.\n\nTo view specific help for any given command, add the command name.\nExample: $0 --help run.\n').help('help').alias('h', 'help').env(envPrefix).version(function () {
-	      __cov_rtDiy5PKXWj8mZTjz2K$4w.f['14']++;__cov_rtDiy5PKXWj8mZTjz2K$4w.s['126']++;return getVersion(absolutePackageDir);
-	   }).demandCommand(1, 'You must specify a command').strict();__cov_rtDiy5PKXWj8mZTjz2K$4w.s['127']++;program.setGlobalOptions({ '
+$4w.b['39'][1]++, _ref5$runOptions);__cov_rtDiy5PKXWj8mZTjz2K$4w.s['131']++;var program = new Program(argv, { absolutePackageDir
+: absolutePackageDir });__cov_rtDiy5PKXWj8mZTjz2K$4w.s['132']++;program.yargs.usage('Usage: $0 [options] command\n\nOption values can also be set by declaring an environment variable prefixed\nwith $' + envPrefix + '_. For example: $' + envPrefix + '_SOURCE_DIR=/path is the same as\n--source-dir=/path.\n\nTo view specific help for any given command, add the command name.\nExample: $0 --help run.\n').help('help').alias('h', 'help').env(envPrefix).version(function () {
+	      __cov_rtDiy5PKXWj8mZTjz2K$4w.f['16']++;__cov_rtDiy5PKXWj8mZTjz2K$4w.s['133']++;return getVersion(absolutePackageDir);
+	   }).demandCommand(1, 'You must specify a command').strict();__cov_rtDiy5PKXWj8mZTjz2K$4w.s['134']++;program.setGlobalOptions({ '
 source-dir': { alias: 's', describe: 'Web extension source directory.', default: process.cwd(), requiresArg: true, type: 'string
 ', coerce: _path2.default.resolve }, 'artifacts-dir': { alias: 'a', describe: 'Directory where artifacts will be saved.', default
 : _path2.default.join(process.cwd(), 'web-ext-artifacts'), normalize: true, requiresArg: true, type: 'string' }, 'verbose': { alias
 : 'v', describe: 'Show verbose output', type: 'boolean' }, 'ignore-files': { alias: 'i', describe: 'A list of glob patterns to define
  which files should be ' + 'ignored. (Example: --ignore-files=path/to/first.js ' + 'path/to/second.js "**/*.log")', demand: false
-, requiresArg: true, type: 'array' } });__cov_rtDiy5PKXWj8mZTjz2K$4w.s['128']++;program.command('build', 'Create a web extension
+, requiresArg: true, type: 'array' } });__cov_rtDiy5PKXWj8mZTjz2K$4w.s['135']++;program.command('build', 'Create a web extension
  package from source', commands.build, { 'as-needed': { describe: 'Watch for file changes and re-build as needed', type: 'boolean
 ' } }).command('sign', 'Sign the web extension so it can be installed in Firefox', commands.sign, { 'api-key': { describe: 'API
 key (JWT issuer) from addons.mozilla.org', demand: true, type: 'string' }, 'api-secret': { describe: 'API secret (JWT secret) from
@@ -225,141 +112,16 @@ Example: https://yourproxy:6000 ', demand: false, type: 'string' }, 'id': { desc
 firefox': { alias: ['f', 'firefox-binary'], describe: 'Path or alias to a Firefox executable such as firefox-bin ' + 'or firefox
 .exe. ' + 'If not specified, the default Firefox will be used. ' + 'You can specify the following aliases in lieu of a path: ' + '
 firefox, beta, nightly, firefoxdeveloperedition.', demand: false, type: 'string' }, 'firefox-profile': { alias: 'p ...</pre></li>
-    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
-    </ul>
+    <li>example usage<pre class="apidocCodePre">...
 
 
-</div>
 
-<div class="apidocSectionDiv">
-<h1><a href="#apidoc.module.web-ext.Gruntfile" id="apidoc.module.web-ext.Gruntfile">module web-ext.Gruntfile</a></h1>
+#!/usr/bin/env node
 
-
-    <h2>
-        <a href="#apidoc.element.web-ext.Gruntfile.Gruntfile" id="apidoc.element.web-ext.Gruntfile.Gruntfile">
-        function <span class="apidocSignatureSpan">web-ext.</span>Gruntfile
-        <span class="apidocSignatureSpan">(grunt)</span>
-        </a>
-    </h2>
-    <ul>
-    <li>description and source-code<pre class="apidocCodePre">Gruntfile = function (grunt) {
-
-  // Looking for something?
-  // The source of a grunt task or its configuration might be in:
-  // 1. this file :)
-  // 2. ./node_modules/grunt-*&lt;task_name&gt;/
-  // 3. ./tasks/&lt;task_name&gt;.js
-  // 4. ./tasks/config/&lt;task_name&gt;.js
-
-
-  // This loads all grunt tasks matching the grunt-*, @*/grunt-* patterns.
-  require('load-grunt-tasks')(grunt);
-
-  var configs = require('load-grunt-configs')(grunt, {
-    config: {
-      src: 'tasks/configs/*.js',
-    },
-  });
-  grunt.initConfig(configs);
-
-  grunt.registerTask('build', [
-    'clean',
-    'webpack:build',
-  ]);
-
-  grunt.registerTask('build-tests', [
-    'build',
-    'webpack:unit_tests',
-    'webpack:functional_tests',
-  ]);
-
-  grunt.registerTask('test', 'run linting and test suites', function() {
-    var tasks = [
-      'lint',
-      'flowbin:check',
-      'build-tests',
-      'mochaTest:unit',
-      'mochaTest:functional',
-    ];
-
-    // TODO: enable the flowbin:check task on AppVeyor (mozilla/web-ext#773)
-    if (process.env.APPVEYOR) {
-      tasks = tasks.filter((t) =&gt; t !== 'flowbin:check');
-      grunt.log.writeln('flowbin:check task skipped because of $APPVEYOR');
-    }
-
-    grunt.task.run(tasks);
-  });
-
-  grunt.registerTask('develop', [
-    'flowbin:start',
-    'watch:develop',
-  ]);
-
-  grunt.registerTask('lint', 'checks for syntax errors', function() {
-    if (process.env.SKIP_LINT) {
-      grunt.log.writeln('lint task skipped because of $SKIP_LINT');
-    } else {
-      grunt.task.run([
-        'eslint',
-      ]);
-    }
-  });
-
-  require('./tasks/travis-pr-title-lint')(grunt);
-}</pre></li>
-    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
-    </ul>
-
-
-</div>
-
-<div class="apidocSectionDiv">
-<h1><a href="#apidoc.module.web-ext.main" id="apidoc.module.web-ext.main">module web-ext.main</a></h1>
-
-
-    <h2>
-        <a href="#apidoc.element.web-ext.main.main" id="apidoc.element.web-ext.main.main">
-        function <span class="apidocSignatureSpan">web-ext.</span>main
-        <span class="apidocSignatureSpan">(absolutePackageDir)</span>
-        </a>
-    </h2>
-    <ul>
-    <li>description and source-code<pre class="apidocCodePre">function main(absolutePackageDir) {
-	   __cov_rtDiy5PKXWj8mZTjz2K$4w.f['13']++;__cov_rtDiy5PKXWj8mZTjz2K$4w.s['123']++;var _ref5 = (__cov_rtDiy5PKXWj8mZTjz2K$4w.b['
-36'][0]++, arguments.length &gt; 1) &amp;&amp; (__cov_rtDiy5PKXWj8mZTjz2K$4w.b['36'][1]++, arguments[1] !== undefined) ? (__cov_rtDiy5PKXWj8mZTjz2K
-$4w.b['35'][0]++, arguments[1]) : (__cov_rtDiy5PKXWj8mZTjz2K$4w.b['35'][1]++, {}),
-	       _ref5$getVersion = _ref5.getVersion,
-	       getVersion = _ref5$getVersion === undefined ? (__cov_rtDiy5PKXWj8mZTjz2K$4w.b['37'][0]++, defaultVersionGetter) : (__cov_rtDiy5PKXWj8mZTjz2K
-$4w.b['37'][1]++, _ref5$getVersion),
-	       _ref5$commands = _ref5.commands,
-	       commands = _ref5$commands === undefined ? (__cov_rtDiy5PKXWj8mZTjz2K$4w.b['38'][0]++, _cmd2.default) : (__cov_rtDiy5PKXWj8mZTjz2K
-$4w.b['38'][1]++, _ref5$commands),
-	       argv = _ref5.argv,
-	       _ref5$runOptions = _ref5.runOptions,
-	       runOptions = _ref5$runOptions === undefined ? (__cov_rtDiy5PKXWj8mZTjz2K$4w.b['39'][0]++, {}) : (__cov_rtDiy5PKXWj8mZTjz2K
-$4w.b['39'][1]++, _ref5$runOptions);__cov_rtDiy5PKXWj8mZTjz2K$4w.s['124']++;var program = new Program(argv, { absolutePackageDir
-: absolutePackageDir });__cov_rtDiy5PKXWj8mZTjz2K$4w.s['125']++;program.yargs.usage('Usage: $0 [options] command\n\nOption values can also be set by declaring an environment variable prefixed\nwith $' + envPrefix + '_. For example: $' + envPrefix + '_SOURCE_DIR=/path is the same as\n--source-dir=/path.\n\nTo view specific help for any given command, add the command name.\nExample: $0 --help run.\n').help('help').alias('h', 'help').env(envPrefix).version(function () {
-	      __cov_rtDiy5PKXWj8mZTjz2K$4w.f['14']++;__cov_rtDiy5PKXWj8mZTjz2K$4w.s['126']++;return getVersion(absolutePackageDir);
-	   }).demandCommand(1, 'You must specify a command').strict();__cov_rtDiy5PKXWj8mZTjz2K$4w.s['127']++;program.setGlobalOptions({ '
-source-dir': { alias: 's', describe: 'Web extension source directory.', default: process.cwd(), requiresArg: true, type: 'string
-', coerce: _path2.default.resolve }, 'artifacts-dir': { alias: 'a', describe: 'Directory where artifacts will be saved.', default
-: _path2.default.join(process.cwd(), 'web-ext-artifacts'), normalize: true, requiresArg: true, type: 'string' }, 'verbose': { alias
-: 'v', describe: 'Show verbose output', type: 'boolean' }, 'ignore-files': { alias: 'i', describe: 'A list of glob patterns to define
- which files should be ' + 'ignored. (Example: --ignore-files=path/to/first.js ' + 'path/to/second.js "**/*.log")', demand: false
-, requiresArg: true, type: 'array' } });__cov_rtDiy5PKXWj8mZTjz2K$4w.s['128']++;program.command('build', 'Create a web extension
- package from source', commands.build, { 'as-needed': { describe: 'Watch for file changes and re-build as needed', type: 'boolean
-' } }).command('sign', 'Sign the web extension so it can be installed in Firefox', commands.sign, { 'api-key': { describe: 'API
-key (JWT issuer) from addons.mozilla.org', demand: true, type: 'string' }, 'api-secret': { describe: 'API secret (JWT secret) from
- addons.mozilla.org', demand: true, type: 'string' }, 'api-url-prefix': { describe: 'Signing API URL prefix', default: 'https://
-addons.mozilla.org/api/v3', demand: true, type: 'string' }, 'api-proxy': { describe: 'Use a proxy to access the signing API. ' + '
-Example: https://yourproxy:6000 ', demand: false, type: 'string' }, 'id': { describe: 'A custom ID for the extension. This has no
- effect if the ' + 'extension already declares an explicit ID in its manifest.', demand: false, type: 'string' }, 'timeout': { describe
-: 'Number of milliseconds to wait before giving up', type: 'number' } }).command('run', 'Run the web extension', commands.run, { '
-firefox': { alias: ['f', 'firefox-binary'], describe: 'Path or alias to a Firefox executable such as firefox-bin ' + 'or firefox
-.exe. ' + 'If not specified, the default Firefox will be used. ' + 'You can specify the following aliases in lieu of a path: ' + '
-firefox, beta, nightly, firefoxdeveloperedition.', demand: false, type: 'string' }, 'firefox-profile': { alias: 'p ...</pre></li>
-    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+var path = require('path');
+var absolutePackageDir = path.join(path.resolve(__dirname), '..');
+require('../dist/web-ext').<span class="apidocCodeKeywordSpan">main</span>(absolutePackageDir);
+...</pre></li>
     </ul>
 
 
